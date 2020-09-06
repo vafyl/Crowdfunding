@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:yaoqiang="http://bpmn.sourceforge.net" exporter="Yaoqiang BPMN Editor" exporterVersion="5.3" expressionLanguage="http://www.w3.org/1999/XPath" id="_1577150504932" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <process id="myProcess" isClosed="false" isExecutable="true" name="My process" processType="None">
+    <extensionElements>
+      <yaoqiang:description/>
+      <yaoqiang:pageFormat height="841.8897637795276" imageableHeight="831.8897637795276" imageableWidth="588.1102362204724" imageableX="5.0" imageableY="5.0" orientation="0" width="598.1102362204724"/>
+      <yaoqiang:page background="#FFFFFF" horizontalCount="1" verticalCount="1"/>
+    </extensionElements>
+    <startEvent id="startevent1" isInterrupting="true" name="Start" parallelMultiple="false">
+      <outgoing>flow1</outgoing>
+      <outputSet/>
+    </startEvent>
+    <userTask activiti:assignee="zhangsan" completionQuantity="1" id="usertask1" implementation="##unspecified" isForCompensation="false" name="组长审批" startQuantity="1">
+      <incoming>flow1</incoming>
+      <outgoing>flow2</outgoing>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway">
+      <incoming>flow2</incoming>
+      <outgoing>flow3</outgoing>
+      <outgoing>flow4</outgoing>
+    </exclusiveGateway>
+    <endEvent id="endevent1" name="End">
+      <incoming>flow3</incoming>
+      <inputSet/>
+    </endEvent>
+    <endEvent id="endevent2" name="End">
+      <incoming>flow4</incoming>
+      <inputSet/>
+    </endEvent>
+    <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="exclusivegateway1"/>
+    <sequenceFlow id="flow3" name="审批通过" sourceRef="exclusivegateway1" targetRef="endevent1">
+      <extensionElements>
+        <activiti:executionListener delegateExpression="${yesListener}" event="end"/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${flag==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow4" name="审批拒绝" sourceRef="exclusivegateway1" targetRef="endevent2">
+      <extensionElements>
+        <activiti:executionListener delegateExpression="${noListener}" event="end"/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${flag==false}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="Yaoqiang_Diagram-myProcess" name="Untitled Diagram" resolution="96.0">
+    <bpmndi:BPMNPlane bpmnElement="myProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Yaoqiang-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="190.0" y="10.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="29.0" x="191.5" y="50.06"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="Yaoqiang-usertask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="155.0" y="90.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="50.0" x="182.5" y="109.58"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Yaoqiang-exclusivegateway1" isMarkerVisible="true">
+        <omgdc:Bounds height="42.0" width="42.0" x="187.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="100.0" x="158.0" y="234.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="Yaoqiang-endevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="100.0" y="300.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="24.0" x="104.0" y="340.06"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="Yaoqiang-endevent2">
+        <omgdc:Bounds height="32.0" width="32.0" x="290.0" y="300.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="24.0" x="294.0" y="340.06"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="Yaoqiang-flow4">
+        <omgdi:waypoint x="229.0" y="211.0"/>
+        <omgdi:waypoint x="290.0" y="316.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="34.84" width="74.0" x="222.5" y="246.08"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="Yaoqiang-flow3">
+        <omgdi:waypoint x="187.0" y="211.0"/>
+        <omgdi:waypoint x="132.0" y="316.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="34.84" width="69.0" x="125.0" y="246.08"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="Yaoqiang-flow2">
+        <omgdi:waypoint x="208.0" y="145.0"/>
+        <omgdi:waypoint x="208.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="6.0" x="205.0" y="157.58"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="Yaoqiang-flow1">
+        <omgdi:waypoint x="206.0" y="42.0"/>
+        <omgdi:waypoint x="206.0" y="90.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="6.0" x="203.0" y="56.08"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.zh.manager.dao.TAccountTypeCertMapper">
+  <resultMap id="BaseResultMap" type="TAccountTypeCert">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="accttype" jdbcType="CHAR" property="accttype" />
+    <result column="certid" jdbcType="INTEGER" property="certid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, accttype, certid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from t_account_type_cert
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="queryCertAccttype" resultType="map">
+    select *from t_account_type_cert
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from t_account_type_cert
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+  <delete id="deleteAcctTypeCert">
+    delete from t_account_type_cert
+    where accttype = #{accttype} and certid=#{certid}
+  </delete>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="TAccountTypeCert" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_account_type_cert (accttype, certid)
+    values (#{accttype,jdbcType=CHAR}, #{certid,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertAcctTypeCert">
+    insert into t_account_type_cert (accttype, certid)
+    values (#{accttype}, #{certid})
+  </insert>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="TAccountTypeCert" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_account_type_cert
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accttype != null">
+        accttype,
+      </if>
+      <if test="certid != null">
+        certid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accttype != null">
+        #{accttype,jdbcType=CHAR},
+      </if>
+      <if test="certid != null">
+        #{certid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="TAccountTypeCert">
+    <!--@mbg.generated-->
+    update t_account_type_cert
+    <set>
+      <if test="accttype != null">
+        accttype = #{accttype,jdbcType=CHAR},
+      </if>
+      <if test="certid != null">
+        certid = #{certid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="TAccountTypeCert">
+    <!--@mbg.generated-->
+    update t_account_type_cert
+    set accttype = #{accttype,jdbcType=CHAR},
+      certid = #{certid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

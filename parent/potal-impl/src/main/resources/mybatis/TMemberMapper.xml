@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.zh.manager.dao.TMemberMapper">
+  <resultMap id="BaseResultMap" type="TMember">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="loginacct" jdbcType="VARCHAR" property="loginacct" />
+    <result column="userpswd" jdbcType="CHAR" property="userpswd" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="authstatus" jdbcType="CHAR" property="authstatus" />
+    <result column="usertype" jdbcType="CHAR" property="usertype" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="cardnum" jdbcType="VARCHAR" property="cardnum" />
+    <result column="accttype" jdbcType="CHAR" property="accttype" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, loginacct, userpswd, username, email, authstatus, usertype, realname, cardnum, 
+    accttype
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="getMemberById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select *
+    from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryMemberByLoginacct" parameterType="String" resultType="TMember">
+    <!--@mbg.generated-->
+    select *
+    from t_member
+    where loginacct = #{loginacct,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="queryCertByMemberid" resultType="map">
+    select t_cert.id,t_cert.name,t_member_cert.iconpath
+    from t_cert join t_member_cert
+    on t_cert.id = t_member_cert.certid
+    where t_member_cert.memberid = #{memberid}
+  </select>
+
+
+  <select id="queryMemberLogin" resultMap="BaseResultMap">
+    select id,loginacct, userpswd, username,
+      email, authstatus, usertype,
+      realname, cardnum, accttype
+      from t_member where loginacct=#{loginacct} and userpswd=#{userpswd}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="TMember" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_member (loginacct, userpswd, username, 
+      email, authstatus, usertype, 
+      realname, cardnum, accttype
+      )
+    values (#{loginacct,jdbcType=VARCHAR}, #{userpswd,jdbcType=CHAR}, #{username,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{authstatus,jdbcType=CHAR}, #{usertype,jdbcType=CHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{cardnum,jdbcType=VARCHAR}, #{accttype,jdbcType=CHAR}
+      )
+  </insert>
+
+  <insert id="saveMember" parameterType="TMember">
+    insert into t_member (loginacct, userpswd, username,
+      email,usertype,authstatus)
+      values (#{loginacct,jdbcType=VARCHAR}, #{userpswd,jdbcType=CHAR}, #{username,jdbcType=VARCHAR},
+    #{email,jdbcType=VARCHAR},#{usertype,jdbcType=CHAR},#{authstatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="TMember" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginacct != null">
+        loginacct,
+      </if>
+      <if test="userpswd != null">
+        userpswd,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="authstatus != null">
+        authstatus,
+      </if>
+      <if test="usertype != null">
+        usertype,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="cardnum != null">
+        cardnum,
+      </if>
+      <if test="accttype != null">
+        accttype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginacct != null">
+        #{loginacct,jdbcType=VARCHAR},
+      </if>
+      <if test="userpswd != null">
+        #{userpswd,jdbcType=CHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="authstatus != null">
+        #{authstatus,jdbcType=CHAR},
+      </if>
+      <if test="usertype != null">
+        #{usertype,jdbcType=CHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardnum != null">
+        #{cardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="accttype != null">
+        #{accttype,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="TMember">
+    <!--@mbg.generated-->
+    update t_member
+    <set>
+      <if test="loginacct != null">
+        loginacct = #{loginacct,jdbcType=VARCHAR},
+      </if>
+      <if test="userpswd != null">
+        userpswd = #{userpswd,jdbcType=CHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="authstatus != null">
+        authstatus = #{authstatus,jdbcType=CHAR},
+      </if>
+      <if test="usertype != null">
+        usertype = #{usertype,jdbcType=CHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardnum != null">
+        cardnum = #{cardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="accttype != null">
+        accttype = #{accttype,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="TMember">
+    <!--@mbg.generated-->
+    update t_member
+    set loginacct = #{loginacct,jdbcType=VARCHAR},
+      userpswd = #{userpswd,jdbcType=CHAR},
+      username = #{username,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      authstatus = #{authstatus,jdbcType=CHAR},
+      usertype = #{usertype,jdbcType=CHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      cardnum = #{cardnum,jdbcType=VARCHAR},
+      accttype = #{accttype,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <update id="updateAcctType" parameterType="TMember">
+    update t_member
+    set accttype = #{accttype,jdbcType=CHAR}
+    where loginacct = #{loginacct,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateBasicinfo" parameterType="TMember">
+    update t_member
+    set realname = #{realname,jdbcType=VARCHAR},
+        cardnum = #{cardnum,jdbcType=VARCHAR},
+        tel = #{tel,jdbcType=VARCHAR}
+    where loginacct = #{loginacct,jdbcType=VARCHAR}
+  </update>
+    <update id="updateEmail">
+      update t_member
+      set email = #{email,jdbcType=VARCHAR}
+      where id=#{id,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateAuthstatus">
+      update t_member
+      set authstatus = #{authstatus}
+      where id = #{id}
+    </update>
+    <update id="updateMembePwdrByLoginacct" parameterType="TMember">
+      update t_member
+      set userpswd = #{userpswd,jdbcType=CHAR}
+      where loginacct = #{loginacct,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

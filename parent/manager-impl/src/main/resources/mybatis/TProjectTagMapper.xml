@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.zh.manager.dao.TProjectTagMapper">
+  <resultMap id="BaseResultMap" type="TProjectTag">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="projectid" jdbcType="INTEGER" property="projectid" />
+    <result column="tagid" jdbcType="INTEGER" property="tagid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, projectid, tagid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_tag
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from t_project_tag
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="TProjectTag" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_project_tag (projectid, tagid)
+    values (#{projectid,jdbcType=INTEGER}, #{tagid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="TProjectTag" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_project_tag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectid != null">
+        projectid,
+      </if>
+      <if test="tagid != null">
+        tagid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectid != null">
+        #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="tagid != null">
+        #{tagid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="TProjectTag">
+    <!--@mbg.generated-->
+    update t_project_tag
+    <set>
+      <if test="projectid != null">
+        projectid = #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="tagid != null">
+        tagid = #{tagid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="TProjectTag">
+    <!--@mbg.generated-->
+    update t_project_tag
+    set projectid = #{projectid,jdbcType=INTEGER},
+      tagid = #{tagid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

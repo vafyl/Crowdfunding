@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.zh.manager.dao.TMessageMapper">
+  <resultMap id="BaseResultMap" type="TMessage">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="memberid" jdbcType="INTEGER" property="memberid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="senddate" jdbcType="CHAR" property="senddate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, memberid, content, senddate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from t_message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from t_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="TMessage" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_message (memberid, content, senddate
+      )
+    values (#{memberid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{senddate,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="TMessage" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberid != null">
+        memberid,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="senddate != null">
+        senddate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberid != null">
+        #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="senddate != null">
+        #{senddate,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="TMessage">
+    <!--@mbg.generated-->
+    update t_message
+    <set>
+      <if test="memberid != null">
+        memberid = #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="senddate != null">
+        senddate = #{senddate,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="TMessage">
+    <!--@mbg.generated-->
+    update t_message
+    set memberid = #{memberid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      senddate = #{senddate,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

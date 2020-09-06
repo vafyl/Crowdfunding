@@ -1,0 +1,8 @@
+# Project exclude paths
+/parent/bean/target/
+/parent/common/target/
+/parent/main/target/
+/parent/manager-api/target/
+/parent/manager-impl/target/
+/parent/potal-api/target/
+/parent/potal-impl/target/

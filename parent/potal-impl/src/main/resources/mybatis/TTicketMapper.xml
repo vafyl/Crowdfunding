@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.zh.manager.dao.TTicketMapper">
+  <resultMap id="BaseResultMap" type="TTicket">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="memberid" jdbcType="INTEGER" property="memberid" />
+    <result column="piid" jdbcType="VARCHAR" property="piid" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="authcode" jdbcType="CHAR" property="authcode" />
+    <result column="pstep" jdbcType="VARCHAR" property="pstep" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, memberid, piid, `status`, authcode, pstep
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from t_ticket
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
+  <select id="getTicketByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from t_ticket
+    where memberid = #{memberid,jdbcType=INTEGER} and status = '0'
+  </select>
+
+  <select id="getMemberByPiid" resultType="com.study.zh.bean.TMember">
+    select t_member.* from t_member
+    join t_ticket on t_member.id = t_ticket.memberid
+    where t_ticket.piid=#{piid}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from t_ticket
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="TTicket" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_ticket (memberid, piid, `status`, 
+      authcode, pstep)
+    values (#{memberid,jdbcType=INTEGER}, #{piid,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{authcode,jdbcType=CHAR}, #{pstep,jdbcType=VARCHAR})
+  </insert>
+
+
+  <insert id="saveTicket" parameterType="TTicket" >
+    insert into t_ticket (memberid, `status`,pstep)
+    values (#{memberid,jdbcType=INTEGER}, #{status,jdbcType=CHAR},
+     #{pstep,jdbcType=VARCHAR})
+  </insert>
+
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="TTicket" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_ticket
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberid != null">
+        memberid,
+      </if>
+      <if test="piid != null">
+        piid,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="authcode != null">
+        authcode,
+      </if>
+      <if test="pstep != null">
+        pstep,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberid != null">
+        #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="piid != null">
+        #{piid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="authcode != null">
+        #{authcode,jdbcType=CHAR},
+      </if>
+      <if test="pstep != null">
+        #{pstep,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="TTicket">
+    <!--@mbg.generated-->
+    update t_ticket
+    <set>
+      <if test="memberid != null">
+        memberid = #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="piid != null">
+        piid = #{piid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="authcode != null">
+        authcode = #{authcode,jdbcType=CHAR},
+      </if>
+      <if test="pstep != null">
+        pstep = #{pstep,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="TTicket">
+    <!--@mbg.generated-->
+    update t_ticket
+    set memberid = #{memberid,jdbcType=INTEGER},
+      piid = #{piid,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=CHAR},
+      authcode = #{authcode,jdbcType=CHAR},
+      pstep = #{pstep,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <update id="updatePstep">
+    update t_ticket
+    set pstep = #{pstep,jdbcType=VARCHAR}
+    where memberid = #{memberid,jdbcType=INTEGER} AND status='0'
+  </update>
+
+
+  <update id="updatePiidAndPstep">
+    update t_ticket
+    set piid = #{piid,jdbcType=VARCHAR},
+        pstep = #{pstep,jdbcType=VARCHAR},
+        authcode = #{authcode,jdbcType=CHAR}
+    where memberid = #{memberid,jdbcType=INTEGER}
+  </update>
+  <update id="updateStatus">
+    update t_ticket
+    set status = '1'
+    where memberid=#{id} and status='0'
+  </update>
+
+</mapper>
